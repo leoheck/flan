@@ -17,6 +17,7 @@ start: build
 pdf:
 	cd ./shared/reports && pdflatex $(last_tex_report_basename)
 	open $(last_tex_report:.tex=.pdf)
+	@ echo "Generated $(last_tex_report:.tex=.pdf)"
 
 md: build
 	docker run --rm --cap-drop=all --cap-add=NET_RAW --name $(container_name) -v "$(CURDIR)/shared:/shared:Z" -e format=md flan_scan
