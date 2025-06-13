@@ -1,1 +1,5 @@
 __pycache__
+.docker_ready
+shared/changelogs/
+shared/run.log
+
