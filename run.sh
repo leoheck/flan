@@ -53,11 +53,13 @@ filter_out_ubuntu_cvss(){
         wget -q -O /shared/changelogs/openssh_${openssh_version} "https://changelogs.ubuntu.com/changelogs/pool/main/o/openssh/openssh_${openssh_version}/changelog"
 
         patched_cvss=($(cat /shared/changelogs/openssh_${openssh_version} | grep -o 'CVE-[0-9]\{4\}-[0-9]\{4,7\}' | sort | uniq | tac))
-        cvss_found=($(grep -o 'CVE-[0-9]\{4\}-[0-9]\{4,7\}' ${xmlfile} | grep -o 'CVE-[0-9]\{4\}-[0-9]\{4,7\}' | sort | uniq | tac))
+
+        # cvss_found_by_version=($(grep -o 'CVE-[0-9]\{4\}-[0-9]\{4,7\}' ${xmlfile} | sort | uniq | tac))
+        cvss_found_by_version=($(xmlstarlet sel -t -m '//table/elem[@key="id"]' -v '.' -n ${xmlfile}))
 
         echo
         echo "Verifying Ubuntu patches:"
-        for cve in ${cvss_found[@]}; do
+        for cve in ${cvss_found_by_version[@]}; do
             echo -ne "- Checking ${cve}... \t"
             if [[ " ${patched_cvss[*]} " == *" ${cve} "* ]]; then
                 echo "Already patched, filtering it out."
