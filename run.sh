@@ -60,7 +60,7 @@ filter_out_ubuntu_cvss(){
         echo
         echo "Verifying Ubuntu patches:"
         for cve in ${cvss_found_by_version[@]}; do
-            echo -ne "- Checking ${cve}... \t"
+            echo -ne "- Checking ${cve} ... \t"
             if [[ " ${patched_cvss[*]} " == *" ${cve} "* ]]; then
                 echo "Already patched, filtering it out."
                 xmlstarlet ed -d "//table[elem[@key='id']='${cve}']" ${xmlfile} > /dev/null 2>&1
