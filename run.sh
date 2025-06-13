@@ -54,8 +54,8 @@ filter_out_ubuntu_cvss(){
 
         patched_cvss=($(cat /shared/changelogs/openssh_${openssh_version} | grep -o 'CVE-[0-9]\{4\}-[0-9]\{4,7\}' | sort | uniq | tac))
 
-        # cvss_found_by_version=($(grep -o 'CVE-[0-9]\{4\}-[0-9]\{4,7\}' ${xmlfile} | sort | uniq | tac))
-        cvss_found_by_version=($(xmlstarlet sel -t -m '//table/elem[@key="id"]' -v '.' -n ${xmlfile}))
+        cvss_found_by_version=($(grep -o 'CVE-[0-9]\{4\}-[0-9]\{4,7\}' ${xmlfile} | sort | uniq | tac))
+        # cvss_found_by_version=($(xmlstarlet sel -t -m '//table/elem[@key="id"]' -v '.' -n ${xmlfile}))
 
         echo
         echo "Verifying Ubuntu patches:"
